@@ -1,0 +1,99 @@
+import { useState } from 'react';
+import axios from 'axios'; // Import axios
+import React from 'react';
+
+
+const MainPage = () => {
+  const [start_time, setStart_time] = useState(0);
+  const [end_time, setEnd_time] = useState(0);
+  const [faculty_name, setFaculty_name] = useState('unmesh pro'); // Faculty name (from your example)
+  const [paper_code, setPaper_code] = useState(0);
+  const [student_Id, setStudent_Id] = useState(''); // Student Id should be a string
+
+  const handleSubmit = async () => {
+    // Prepare the data in the required format
+    const data = {
+      faculty_name,
+      start_time,
+      end_time,
+      studentId: [student_Id.toString()], // Convert student_Id to a string and put it in an array
+      paper_code: paper_code.toString(),
+    };
+
+    try {
+      // Sending a POST request to the server
+      const response = await axios.post('http://localhost:3000/api/v1/session', data);
+      console.log('Response:', response.data);
+      
+      // If the request is successful, you can redirect or navigate to another page
+      // Example:
+      // window.location.href = "/some-other-page"; // Use react-router if it's a React app.
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
+
+  return (
+    <div className="bg-[#2a1613] h-screen">
+      <div className="text-[#dbd8d3] text-3xl font-bold p-6 text-center">
+        WELCOME <br /> LADIES AND GENTLEMEN
+      </div>
+
+      <div>
+        <div className="flex space-x-4 justify-center items-center">
+          <input
+            onChange={(e) => setStart_time(Number(e.target.value))}
+            id="start_time"
+            type="number"
+            placeholder="Start Time HHMM"
+            className="bg-[#8C6E63] text-white p-1 w-39 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            onChange={(e) => setEnd_time(Number(e.target.value))}
+            id="end_time"
+            type="number"
+            placeholder="End Time HHMM"
+            className="bg-[#8C6E63] text-white p-1 w-39 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            className="p-1 w-39 bg-[#FFE0B2] rounded-md border-2 border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={faculty_name}
+            onChange={(e) => setFaculty_name(e.target.value)}
+          >
+            <option value="unmesh pro">Unmesh Pro</option>
+            <option value="heehheh">heehheh</option>
+          </select>
+          <input
+            onChange={(e) => setPaper_code(Number(e.target.value))}
+            id="paper_code"
+            type="number"
+            placeholder="Paper Code"
+            className="bg-[#FFE0B2] text-black p-1 w-39 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <div className="flex space-x-4 justify-center items-center p-3">
+        <div>
+          <input
+            onChange={(e) => setStudent_Id(e.target.value)} // Keep student Id as string
+            id="Student_Id"
+            type="text"
+            placeholder="Student_Id"
+            className="bg-[#FFE0B2] text-black p-1 w-39 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <button
+            onClick={handleSubmit}
+            className="bg-[#FFE0B2] text-white w-24 rounded-md border p-1 border-grey-600">
+            Submit Data
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MainPage;

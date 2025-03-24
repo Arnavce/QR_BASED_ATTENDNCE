@@ -1,0 +1,18 @@
+npm init -y
+npm install typescript
+npx tsc --init
+
+"rootDir": "./src",
+"outDir": "./dist"
+
+npm i express 
+
+npm install -d @types/express
+
+npm install mongoose 
+
+npm install @types/mongoose
+
+npm install jsonwebtoken
+
+npm install  @types/jsonwebtoken
